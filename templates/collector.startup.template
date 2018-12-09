@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# startup script
+
+
+sudo apt-get update
+sudo apt-get -y install default-jre
+sudo apt-get -y install unzip
+wget https://dl.bintray.com/snowplow/snowplow-generic/snowplow_scala_stream_collector_google_pubsub_COLLECTOR_VERSION.zip
+gsutil cp gs://STORAGE_BUCKET/collector.config .
+unzip snowplow_scala_stream_collector_google_pubsub_COLLECTOR_VERSION.zip
+java -jar snowplow-stream-collector-google-pubsub-COLLECTOR_VERSION.jar --config application.conf &
+
+~                                                                                                                                     
+~                                                                                                                                     
+~                                                                                 
