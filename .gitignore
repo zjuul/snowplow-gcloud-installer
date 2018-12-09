@@ -17,3 +17,7 @@ vignettes/*.pdf
 
 # credentials
 *.json
+
+# generated files
+output_dir/*
+
