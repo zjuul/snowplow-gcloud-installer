@@ -36,8 +36,8 @@ export GSP_DOMAIN_LISTEN='[ "*" , "127.0.0.1" ]'
 # pubsub
 
 # collector sinks
-export GSP_PUBSUB_GOOD="sp-good"
-export GSP_PUBSUB_BAD="sp-bad"
+export GSP_PUBSUB_GOOD="good"
+export GSP_PUBSUB_BAD="bad"
 
 # shredded sinks
 export GSP_PUBSUB_GOOD_SHRED="sp-shred-good"

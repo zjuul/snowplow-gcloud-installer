@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -v GSP_PROJECT_NAME ] ; then
+if [ ! -z "${GSP_PROJECT_NAME}x" ] ; then
 	echo "spinning up instance"
 else
 	echo "GSP_ env not found. Set first"
@@ -19,7 +19,8 @@ gcloud compute --project ${GSP_PROJECT_NAME} instances create "${GSP_COLLECTOR_I
                  --image "ubuntu-1804-bionic-v20181120" --image-project "ubuntu-os-cloud" \
                  --boot-disk-size "10" \
                  --boot-disk-type "pd-standard" \
-                 --boot-disk-device-name "instance-2"
+                 --boot-disk-device-name "${GSP_COLLECTOR_INSTANCE_NAME}-disk" \
+		 --metadata-from-file startup-script=output_dir/collector.startup.sh
 
 echo "Done. Now the firewall rule"
 

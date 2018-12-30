@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -v GSP_PROJECT_NAME ] ; then
+if [ ! -z "${GSP_PROJECT_NAME}x" ] ; then
 	echo "creating collector config..."
 else
 	echo "GSP_ env not found. Set first"

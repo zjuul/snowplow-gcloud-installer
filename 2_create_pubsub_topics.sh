@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -v GSP_PROJECT_NAME ] ; then
+if [ ! -z "${GSP_PROJECT_NAME}x" ] ; then
 	echo "creating pubsub topics..."
 else
 	echo "GSP_ env not found. Set first"
@@ -24,13 +24,11 @@ create_topic() {
 	fi
 }
 
+
 create_topic ${GSP_PUBSUB_GOOD}
 create_topic ${GSP_PUBSUB_BAD}
-
-# test listener on sp-test-good
-
 gcloud pubsub subscriptions create ${GSP_PUBSUB_GOOD_SUB} --topic ${GSP_PUBSUB_GOOD}
-
+	
 echo "Done"
 
 
