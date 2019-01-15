@@ -21,6 +21,7 @@ create_topic() {
 
 # infile, outfile - note match order! BLA_BLA before BLA :-)
 create_config_file() {
+	mkdir -p output_dir
         if [ -f templates/$1 ] ; then
                 cat templates/$1 | \
                 sed -e "s/GSP_PUBSUB_GOOD_ENRICHED/${GSP_PUBSUB_GOOD}/" \
