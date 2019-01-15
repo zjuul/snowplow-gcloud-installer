@@ -1,0 +1,24 @@
+{
+    "schema": "iglu:com.snowplowanalytics.snowplow.storage/bigquery_config/jsonschema/1-0-0",
+    "data": {
+        "name": "Snowplow Page View Data",
+        "id": "GSP_RANDOM_UUID",
+
+        "projectId": "GSP_PROJECT_NAME",
+        "datasetId": "GSP_BQ_DATASET_NAME",
+        "tableId": "pageviews",
+
+        "input": "GSP_PUBSUB_GOOD_ENRICHED-sub",
+        "typesTopic": "GSP_PUBSUB_BQ_TYPES",
+        "typesSubscription": "GSP_PUBSUB_BQ_TYPES-sub",
+        "badRows": "GSP_PUBSUB_BQ_BAD",
+        "failedInserts": "GSP_PUBSUB_BQ_FAILED",
+
+        "load": {
+            "mode": "STREAMING_INSERTS",
+            "retry": false
+        },
+
+        "purpose": "ENRICHED_EVENTS"
+    }
+}

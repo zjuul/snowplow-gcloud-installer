@@ -15,7 +15,7 @@
 collector {
   # The collector runs as a web service specified on the following interface and port.
   interface = "0.0.0.0"
-  port = COLLECTOR_PORT
+  port = GSP_COLLECTOR_PORT
 
   # Configure the P3P policy header.
   p3p {
@@ -30,7 +30,7 @@ collector {
     enabled = false
     # Domains that are granted access, *.acme.com will match http://acme.com and http://sub.acme.com
     #domains = [ "*" ]
-    domains = DOMAIN_LISTEN
+    domains = GSP_DOMAIN_LISTEN
     # Whether to only grant access to HTTPS or both HTTPS and HTTP sources
     secure = true
   }
@@ -99,10 +99,10 @@ collector {
 
   streams {
     # Events which have successfully been collected will be stored in the good stream/topic
-    good = "PUBSUB_GOOD"
+    good = "GSP_PUBSUB_GOOD"
 
     # Events that are too big (w.r.t Kinesis 1MB limit) will be stored in the bad stream/topic
-    bad = "PUBSUB_BAD"
+    bad = "GSP_PUBSUB_BAD"
 
     # Whether to use the incoming event's ip as the partition key for the good stream/topic
     # Note: Nsq does not make use of partition key.
@@ -142,7 +142,7 @@ collector {
 #      }
 
       # Or Google Pubsub
-      googleProjectId = "PROJECT_NAME"
+      googleProjectId = "GSP_PROJECT_NAME"
       ## Minimum, maximum and total backoff periods, in milliseconds
       ## and multiplier between two backoff
       backoffPolicy {
