@@ -16,7 +16,7 @@ vignettes/*.pdf
 .httr-oauth
 
 # credentials
-*.json
+credentials.json
 
 # generated files
 output_dir/*

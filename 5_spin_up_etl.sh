@@ -20,7 +20,7 @@ gcloud compute --project ${GSP_PROJECT_NAME} instances create "${GSP_ETL_INSTANC
                  --subnet "default" \
                  --maintenance-policy "MIGRATE" \
                  --scopes https://www.googleapis.com/auth/pubsub,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/trace.append,https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/bigquery,https://www.googleapis.com/auth/compute \
-                 --service-account snowplow-manager@snowplow-203709.iam.gserviceaccount.com \
+                 --service-account ${GSP_SERVICE_ACCOUNT} \
                  --tags "${GSP_ETL_INSTANCE_NAME}" \
                  --image "ubuntu-1804-bionic-v20181120" --image-project "ubuntu-os-cloud" \
                  --boot-disk-size "10" \

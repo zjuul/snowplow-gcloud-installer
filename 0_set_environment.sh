@@ -14,6 +14,9 @@ export GSP_ROOTDIR=~/git/snowplow-google
 export GSP_PROJECT_NAME="snowplow-203709"
 export GSP_KEYFILE=${GSP_ROOTDIR}/credentials.json
 
+export GSP_SERVICE_ACCOUNT=$(grep client_email ${GSP_KEYFILE} | cut -d\" -f4)
+
+
 # region - all 
 export GSP_REGION="europe-west3-c"
 
@@ -78,6 +81,6 @@ export GSP_PUBSUB_GOOD_SUB="test-sub"
 ######################
 # bigquery
 
-export GSP_BQ_DATASET_NAME="snowplow_stuifbergen_dataset"
+export GSP_BQ_DATASET_NAME="snowplow_dataset"
 export GSP_BQ_DATA_LOCATION="EU"
 
