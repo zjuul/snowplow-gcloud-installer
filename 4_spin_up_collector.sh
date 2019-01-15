@@ -1,5 +1,8 @@
 #!/bin/bash
 
+. ./0_set_environment.sh
+. ./0_functions.sh
+
 if [ ! -z "${GSP_PROJECT_NAME}x" ] ; then
 	echo "spinning up instance"
 else
