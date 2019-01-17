@@ -20,6 +20,9 @@ export GSP_SERVICE_ACCOUNT=$(grep client_email ${GSP_KEYFILE} | cut -d\" -f4)
 # region - all 
 export GSP_REGION="europe-west3-c"
 
+# region dataflow - is not available everywhere
+export GSP_DATAFLOW_REGION="europe-west1"
+
 ######################
 # storage buckets
 
@@ -30,20 +33,34 @@ export GSP_STORAGE_BUCKET="sp-storage"
 # iglu resolve with google?
 # y = "_google"
 # n = ""
-export GSP_RESOLVE_GOOGLE="_google"
+#export GSP_RESOLVE_GOOGLE="_google"
 export GSP_RESOLVE_GOOGLE=""
 
 ######################
-# collector instance
-export GSP_COLLECTOR_INSTANCE_NAME="sp-collector"
-# f1-micro g1-small n1-standard-1
-export GSP_COLLECTOR_INSTANCE_TYPE="n1-standard-1"
+# collector 
 
+# hostname - change to your domain and hostname
+export GSP_TRACKER_DOMAIN="datadatadata.nl"
+export GSP_TRACKER_HOSTNAME="tracker"
+
+export GSP_TRACKER_HOST=${GSP_TRACKER_HOSTNAME}.${GSP_TRACKER_DOMAIN}
+
+# collector instance template and group
+
+export GSP_COLLECTOR_INSTANCE_NAME="sp-coll"
+# f1-micro g1-small n1-standard-1
+export GSP_COLLECTOR_INSTANCE_TYPE="g1-small"
 
 # config
 export GSP_COLLECTOR_VERSION="0.14.0"
 export GSP_COLLECTOR_PORT="8080"
 export GSP_DOMAIN_LISTEN='[ "*" , "127.0.0.1" ]'
+
+# group
+export GSP_COLLECTOR_INSTANCE_GROUP_NAME="sp-collector-group"
+
+# health check
+export GSP_COLLECTOR_HEALTH='sp-collector-healthcheck'
 
 
 ######################
@@ -75,8 +92,6 @@ export GSP_PUBSUB_BQ_BAD="bq-bad-rows"
 export GSP_PUBSUB_BQ_FAILED="bq-failed-inserts"
 export GSP_PUBSUB_BQ_TYPES="bq-types"
 
-# just for tests
-export GSP_PUBSUB_GOOD_SUB="test-sub"
 
 ######################
 # bigquery

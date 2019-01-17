@@ -21,7 +21,11 @@ create_topic ${GSP_PUBSUB_BQ_TYPES}
 
 gcloud pubsub subscriptions create ${GSP_PUBSUB_GOOD}-sub          --topic ${GSP_PUBSUB_GOOD}
 gcloud pubsub subscriptions create ${GSP_PUBSUB_GOOD_ENRICHED}-sub --topic ${GSP_PUBSUB_GOOD_ENRICHED}
-gcloud pubsub subscriptions create ${GSP_PUBSUB_BQ_TYPES}-sub      --topic ${GSP_PUBSUB_BQ_TYPES}
+
+# optional - for debugging purposes
+#gcloud pubsub subscriptions create ${GSP_PUBSUB_BQ_TYPES}-sub      --topic ${GSP_PUBSUB_BQ_TYPES}
+#gcloud pubsub subscriptions create ${GSP_PUBSUB_BQ_FAILED}-sub     --topic ${GSP_PUBSUB_BQ_FAILED}
+#gcloud pubsub subscriptions create ${GSP_PUBSUB_BQ_BAD}-sub        --topic ${GSP_PUBSUB_BQ_BAD}
 	
 echo "Done"
 

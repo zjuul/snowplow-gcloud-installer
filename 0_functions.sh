@@ -24,8 +24,9 @@ create_config_file() {
 	mkdir -p output_dir
         if [ -f templates/$1 ] ; then
                 cat templates/$1 | \
-                sed -e "s/GSP_PUBSUB_GOOD_ENRICHED/${GSP_PUBSUB_GOOD}/" \
+                sed -e "s/GSP_PUBSUB_GOOD_ENRICHED/${GSP_PUBSUB_GOOD_ENRICHED}/" \
                     -e "s/GSP_PUBSUB_GOOD/${GSP_PUBSUB_GOOD}/" \
+                    -e "s/GSP_PUBSUB_BAD_ENRICHED/${GSP_PUBSUB_BAD_ENRICHED}/" \
                     -e "s/GSP_PUBSUB_BAD/${GSP_PUBSUB_BAD}/" \
                     -e "s/GSP_DOMAIN_LISTEN/${GSP_DOMAIN_LISTEN}/" \
                     -e "s/GSP_PROJECT_NAME/${GSP_PROJECT_NAME}/" \
@@ -38,6 +39,7 @@ create_config_file() {
                     -e "s/GSP_PUBSUB_BQ_BAD/${GSP_PUBSUB_BQ_BAD}/" \
                     -e "s/GSP_PUBSUB_BQ_FAILED/${GSP_PUBSUB_BQ_FAILED}/" \
                     -e "s/GSP_RANDOM_UUID/${GSP_RANDOM_UUID}/" \
+                    -e "s/GSP_DATAFLOW_REGION/${GSP_DATAFLOW_REGION}/" \
                     -e "s/GSP_REGION/${GSP_REGION}/" \
                 > output_dir/$2
         else
@@ -65,4 +67,18 @@ create_bq_dataset() {
         else
                 bq mk -d --data_location=${GSP_BQ_DATA_LOCATION} $1
         fi
+}
+
+
+# IPv4
+create_ip() {
+	if gcloud compute --project ${GSP_PROJECT_NAME} addresses list | grep -q -- ${GSP_COLLECTOR_NAME}-ip ; then
+		echo "I have an address.." >/dev/stderr
+	else 
+		gcloud compute --project ${GSP_PROJECT_NAME} addresses create ${GSP_COLLECTOR_NAME}-ip \
+			--global \
+			--ip-version IPV4
+	fi
+	
+	echo $(gcloud compute --project ${GSP_PROJECT_NAME} addresses list | grep -- ${GSP_COLLECTOR_NAME}-ip | awk '{print $2}')
 }

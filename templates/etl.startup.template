@@ -3,7 +3,12 @@ enrich_version="0.1.0"
 bq_version="0.1.0"
 bucket_name="GSP_STORAGE_BUCKET-tmp"
 project_id="GSP_PROJECT_NAME"
-region="GSP_REGION"
+region="GSP_DATAFLOW_REGION"
+
+goodsub=GSP_PUBSUB_GOOD-sub
+bad=GSP_PUBSUB_BAD
+enrichedgood=GSP_PUBSUB_GOOD_ENRICHED
+enrichedbad=GSP_PUBSUB_BAD_ENRICHED
 
 sudo apt-get update
 sudo apt-get -y install default-jre
@@ -21,9 +26,11 @@ unzip snowplow_bigquery_mutator_$bq_version.zip
 gsutil cp gs://$bucket_name/iglu_resolver.json .
 gsutil cp gs://$bucket_name/bigquery_config.json .
 
-./beam-enrich-$enrich_version/bin/beam-enrich --runner=DataFlowRunner --project=$project_id --streaming=true --region=$region --gcpTempLocation=gs://$bucket_name/temp-files --job-name=beam-enrich --raw=projects/$project_id/subscriptions/good-sub --enriched=projects/$project_id/topics/enriched-good --bad=projects/$project_id/topics/enriched-bad --resolver=iglu_resolver.json
+./beam-enrich-$enrich_version/bin/beam-enrich --runner=DataFlowRunner --project=$project_id --streaming=true --region=$region --gcpTempLocation=gs://$bucket_name/temp-files --job-name=beam-enrich --raw=projects/$project_id/subscriptions/$goodsub --enriched=projects/$project_id/topics/$enrichedgood --bad=projects/$project_id/topics/$enrichedbad --resolver=iglu_resolver.json
 
 ./snowplow-bigquery-mutator-$bq_version/bin/snowplow-bigquery-mutator create --config $(cat bigquery_config.json | base64 -w 0) --resolver $(cat iglu_resolver.json | base64 -w 0)
 
 ./snowplow-bigquery-mutator-$bq_version/bin/snowplow-bigquery-mutator listen --config $(cat bigquery_config.json | base64 -w 0) --resolver $(cat iglu_resolver.json | base64 -w 0) &
+
+./snowplow-bigquery-loader-$bq_version/bin/snowplow-bigquery-loader --config=$(cat bigquery_config.json | base64 -w 0) --resolver=$(cat iglu_resolver.json | base64 -w 0) --runner=DataFlowRunner --project=$project_id --region=$region --gcpTempLocation=gs://$bucket_name/temp-files
 
