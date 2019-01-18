@@ -14,14 +14,21 @@ sudo apt-get update
 sudo apt-get -y install default-jre
 sudo apt-get -y install unzip
 
-wget https://dl.bintray.com/snowplow/snowplow-generic/snowplow_beam_enrich_$enrich_version.zip
-unzip snowplow_beam_enrich_$enrich_version.zip
+# no need to re-download on every reboot
+if [ ! -d snowplow_beam_enrich_$enrich_version ] ; then 
+	wget https://dl.bintray.com/snowplow/snowplow-generic/snowplow_beam_enrich_$enrich_version.zip
+	unzip snowplow_beam_enrich_$enrich_version.zip
+fi
 
-wget https://dl.bintray.com/snowplow/snowplow-generic/snowplow_bigquery_loader_$bq_version.zip
-unzip snowplow_bigquery_loader_$bq_version.zip
+if [ ! -d snowplow-bigquery-loader-$enrich_version ] ; then
+	wget https://dl.bintray.com/snowplow/snowplow-generic/snowplow_bigquery_loader_$bq_version.zip
+	unzip snowplow_bigquery_loader_$bq_version.zip
+fi
 
-wget https://dl.bintray.com/snowplow/snowplow-generic/snowplow_bigquery_mutator_$bq_version.zip
-unzip snowplow_bigquery_mutator_$bq_version.zip
+if [ ! -d snowplow_bigquery_mutator_$bq_version ] ; then
+	wget https://dl.bintray.com/snowplow/snowplow-generic/snowplow_bigquery_mutator_$bq_version.zip
+	unzip snowplow_bigquery_mutator_$bq_version.zip
+fi
 
 gsutil cp gs://$bucket_name/iglu_resolver.json .
 gsutil cp gs://$bucket_name/bigquery_config.json .
