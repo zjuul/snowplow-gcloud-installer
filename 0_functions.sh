@@ -57,7 +57,7 @@ create_storage() {
         else
                 gsutil mb -c regional -l ${GSP_REGION%??} gs://$1
 		if [ $? -gt 0 ] ; then
-			echo Bucket creation failed. See error (choose other name?)
+			echo 'Bucket creation failed. See error (choose other name?)'
 			exit 1
 		fi
         fi
