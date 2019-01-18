@@ -56,6 +56,10 @@ create_storage() {
                 echo $1 already exists.. skip
         else
                 gsutil mb -c regional -l ${GSP_REGION%??} gs://$1
+		if [ $? -gt 0 ] ; then
+			echo Bucket creation failed. See error (choose other name?)
+			exit 1
+		fi
         fi
 }
 
@@ -75,10 +79,10 @@ create_ip() {
 	if gcloud compute --project ${GSP_PROJECT_NAME} addresses list | grep -q -- ${GSP_COLLECTOR_NAME}-ip ; then
 		echo "I have an address.." >/dev/stderr
 	else 
-		gcloud compute --project ${GSP_PROJECT_NAME} addresses create ${GSP_COLLECTOR_NAME}-ip \
+		gcloud compute --project ${GSP_PROJECT_NAME} addresses create ${GSP_COLLECTOR_NAME}ip \
 			--global \
 			--ip-version IPV4
 	fi
 	
-	echo $(gcloud compute --project ${GSP_PROJECT_NAME} addresses list | grep -- ${GSP_COLLECTOR_NAME}-ip | awk '{print $2}')
+	echo $(gcloud compute --project ${GSP_PROJECT_NAME} addresses list | grep -- ${GSP_COLLECTOR_NAME}ip | awk '{print $2}')
 }

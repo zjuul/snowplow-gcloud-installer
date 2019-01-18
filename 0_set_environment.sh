@@ -4,7 +4,11 @@
 #
 
 # change this:
-export GSP_RANDOM_UUID="04c32a70-532e-4358-ab78-d4a597dbf982"
+export GSP_RANDOM_UUID="2075C649-5DF8-4BC2-8D04-F6B4C3418E47"
+#
+# or uncomment
+# export GSP_RANDOM_UUID=$(uuidgen)
+
 
 # directory of your scripts and files
 # needs 2 dirs: ./templates and ./outpuyt-dir
@@ -12,7 +16,9 @@ export GSP_ROOTDIR=~/git/snowplow-google
 
 # GCE project name and credential file
 export GSP_PROJECT_NAME="snowplow-203709"
-export GSP_KEYFILE=${GSP_ROOTDIR}/credentials.json
+export GSP_PROJECT_NAME="test-snowplow-script"
+export GSP_KEYFILE=./credentials.json
+export GSP_KEYFILE=~/Downloads/test-snowplow-script-79f52ae0611f.json
 
 export GSP_SERVICE_ACCOUNT=$(grep client_email ${GSP_KEYFILE} | cut -d\" -f4)
 
@@ -27,7 +33,7 @@ export GSP_DATAFLOW_REGION="europe-west1"
 # storage buckets
 
 # main storage. Script also creates a bucket with -tmp appended
-export GSP_STORAGE_BUCKET="sp-storage"
+export GSP_STORAGE_BUCKET="sp-storage-random123"
 
 ######################
 # iglu resolve with google?
@@ -41,7 +47,7 @@ export GSP_RESOLVE_GOOGLE=""
 
 # hostname - change to your domain and hostname
 export GSP_TRACKER_DOMAIN="datadatadata.nl"
-export GSP_TRACKER_HOSTNAME="tracker"
+export GSP_TRACKER_HOSTNAME="stats"
 
 export GSP_TRACKER_HOST=${GSP_TRACKER_HOSTNAME}.${GSP_TRACKER_DOMAIN}
 

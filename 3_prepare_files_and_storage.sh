@@ -17,7 +17,7 @@ create_config_file bigquery_config.json.template bigquery_config.json
 
 # place in bucket
 
-create_storage ${GSP_STORAGE_BUCKET}
+create_storage ${GSP_STORAGE_BUCKET} || exit 1
 gsutil cp output_dir/collector.config gs://$GSP_STORAGE_BUCKET
 
 create_storage ${GSP_STORAGE_BUCKET}-tmp
