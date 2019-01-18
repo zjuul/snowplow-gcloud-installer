@@ -14,11 +14,11 @@ export GSP_RANDOM_UUID="2075C649-5DF8-4BC2-8D04-F6B4C3418E47"
 # needs 2 dirs: ./templates and ./outpuyt-dir
 export GSP_ROOTDIR=~/git/snowplow-google
 
-# GCE project name and credential file
-export GSP_PROJECT_NAME="snowplow-203709"
-export GSP_PROJECT_NAME="test-snowplow-script"
+# GCE project name (create it first) and credential file
+export GSP_PROJECT_NAME="your-project-name-123"
+
+# make sure the credentials file exists (and has safe permissions)
 export GSP_KEYFILE=./credentials.json
-export GSP_KEYFILE=~/Downloads/test-snowplow-script-79f52ae0611f.json
 
 export GSP_SERVICE_ACCOUNT=$(grep client_email ${GSP_KEYFILE} | cut -d\" -f4)
 
