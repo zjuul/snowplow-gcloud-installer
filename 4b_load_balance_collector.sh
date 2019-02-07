@@ -40,7 +40,7 @@ echo ....... adding backend-service to instance
 gcloud compute --project ${GSP_PROJECT_NAME} \
 	backend-services add-backend ${GSP_COLLECTOR_INSTANCE_NAME}-backend-service \
 	--instance-group ${GSP_COLLECTOR_INSTANCE_GROUP_NAME} \
-	--zone ${GSP_REGION}
+	--instance-group-zone ${GSP_REGION}
 
 echo ....... url map
 
