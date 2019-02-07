@@ -11,8 +11,8 @@ export GSP_RANDOM_UUID="2075C649-5DF8-4BC2-8D04-F6B4C3418E47"
 
 
 # directory of your scripts and files
-# needs 2 dirs: ./templates and ./outpuyt-dir
-export GSP_ROOTDIR=~/git/snowplow-google
+# needs 2 dirs: ./templates and ./output-dir
+export GSP_ROOTDIR=~/git/snowplow-gcloud-installer
 
 # GCE project name (create it first) and credential file
 export GSP_PROJECT_NAME="your-project-name-123"
@@ -24,7 +24,10 @@ export GSP_SERVICE_ACCOUNT=$(grep client_email ${GSP_KEYFILE} | cut -d\" -f4)
 
 
 # region - all 
+# note: enter the ZONE here, including the "-a", "-b", or "-c". - TODO: fix naming convention
+# example: "europe-west3-c"
 export GSP_REGION="europe-west3-c"
+
 
 # region dataflow - is not available everywhere
 export GSP_DATAFLOW_REGION="europe-west1"
