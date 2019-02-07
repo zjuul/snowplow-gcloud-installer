@@ -55,7 +55,7 @@ gcloud compute --project ${GSP_PROJECT_NAME} \
 	--default-service ${GSP_COLLECTOR_INSTANCE_NAME}-backend-service
 
 
-echo ....... ssl cert (managed by google)
+echo "....... ssl cert (managed by google)"
 
 gcloud beta compute --project ${GSP_PROJECT_NAME} \
 	ssl-certificates create ${GSP_COLLECTOR_INSTANCE_NAME}-certificate \
