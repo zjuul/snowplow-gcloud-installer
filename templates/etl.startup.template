@@ -2,6 +2,7 @@
 enrich_version="0.1.0"
 bq_version="0.1.0"
 bucket_name="GSP_STORAGE_BUCKET-tmp"
+enrichments_bucket="GSP_STORAGE_BUCKET"
 project_id="GSP_PROJECT_NAME"
 region="GSP_DATAFLOW_REGION"
 
@@ -15,7 +16,7 @@ sudo apt-get -y install default-jre
 sudo apt-get -y install unzip
 
 # no need to re-download on every reboot
-if [ ! -d snowplow_beam_enrich_$enrich_version ] ; then 
+if [ ! -d beam_enrich_$enrich_version ] ; then 
 	wget https://dl.bintray.com/snowplow/snowplow-generic/snowplow_beam_enrich_$enrich_version.zip
 	unzip snowplow_beam_enrich_$enrich_version.zip
 fi
@@ -25,15 +26,21 @@ if [ ! -d snowplow-bigquery-loader-$enrich_version ] ; then
 	unzip snowplow_bigquery_loader_$bq_version.zip
 fi
 
-if [ ! -d snowplow_bigquery_mutator_$bq_version ] ; then
+if [ ! -d snowplow-bigquery-mutator_$bq_version ] ; then
 	wget https://dl.bintray.com/snowplow/snowplow-generic/snowplow_bigquery_mutator_$bq_version.zip
 	unzip snowplow_bigquery_mutator_$bq_version.zip
 fi
 
+if [ ! -d enrichments ] ; then
+	mkdir enrichments
+fi
+
+gsutil cp gs://$enrichments_bucket/enrichments/*.json ./enrichments
+
 gsutil cp gs://$bucket_name/iglu_resolver.json .
 gsutil cp gs://$bucket_name/bigquery_config.json .
 
-./beam-enrich-$enrich_version/bin/beam-enrich --runner=DataFlowRunner --project=$project_id --streaming=true --region=$region --gcpTempLocation=gs://$bucket_name/temp-files --job-name=beam-enrich --raw=projects/$project_id/subscriptions/$goodsub --enriched=projects/$project_id/topics/$enrichedgood --bad=projects/$project_id/topics/$enrichedbad --resolver=iglu_resolver.json
+./beam-enrich-$enrich_version/bin/beam-enrich --runner=DataFlowRunner --project=$project_id --streaming=true --region=$region --gcpTempLocation=gs://$bucket_name/temp-files --job-name=beam-enrich --raw=projects/$project_id/subscriptions/$goodsub --enriched=projects/$project_id/topics/$enrichedgood --bad=projects/$project_id/topics/$enrichedbad --resolver=iglu_resolver.json --enrichments=enrichments
 
 ./snowplow-bigquery-mutator-$bq_version/bin/snowplow-bigquery-mutator create --config $(cat bigquery_config.json | base64 -w 0) --resolver $(cat iglu_resolver.json | base64 -w 0)
 

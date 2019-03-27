@@ -29,6 +29,8 @@ gsutil cp output_dir/bigquery_config.json gs://${GSP_STORAGE_BUCKET}-tmp/bigquer
 create_config_file collector.startup.template collector.startup.sh
 create_config_file etl.startup.template etl.startup.sh
 
+# enrichments
+gsutil cp enrichments/*.json gs://${GSP_STORAGE_BUCKET}/enrichments/
 
 echo "Done"
 
