@@ -7,6 +7,7 @@ else
 	exit 1
 fi
 
+. ./0_set_environment.sh
 . ./0_functions.sh
 
 create_topic ${GSP_PUBSUB_GOOD}
